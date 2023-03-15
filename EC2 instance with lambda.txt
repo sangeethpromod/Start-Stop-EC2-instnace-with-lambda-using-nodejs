@@ -29,3 +29,9 @@ exports.handler = async (event) => {
     console.log("Error:", error);
   }
 };
+
+To start/stop instance type this in test event
+{
+  "instanceId": "instance id",
+  "action": "terminate"
+}
