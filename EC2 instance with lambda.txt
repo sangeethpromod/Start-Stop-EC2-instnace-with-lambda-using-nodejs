@@ -1,0 +1,31 @@
+const AWS = require('aws-sdk');
+const ec2 = new AWS.EC2();
+
+exports.handler = async (event) => {
+  const instanceId = event.instanceId;
+  const action = event.action; // "start" or "stop"
+  
+  const params = {
+    InstanceIds: [instanceId]
+  };
+  
+  try {
+    if (action === "start") {
+      await ec2.startInstances(params).promise();
+      console.log("Instance started successfully");
+    } else if (action === "stop") {
+      await ec2.stopInstances(params).promise();
+      console.log("Instance stopped successfully");
+    } else if (action === "reboot") {
+      await ec2.stopInstances(params).promise();
+      console.log("Instance rebooted successfully");
+    } else if (action === "terminate") {
+      await ec2.stopInstances(params).promise();
+      console.log("Instance Terminated successfully");
+    } else {
+      console.log("Invalid action:", action);
+    }
+  } catch (error) {
+    console.log("Error:", error);
+  }
+};
